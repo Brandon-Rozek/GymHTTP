@@ -18,8 +18,9 @@ class Environment:
     def get_environment_name(self):
         r = requests.get(self.server + "/environment")
         return r.text
-    def get_state(self):
-        r = requests.get(self.server + "/state")
+    def get_state(self, preprocess = False):
+        parameter = "?preprocess" if preprocess else ""
+        r = requests.get(self.server + "/state" + parameter)
         return pickle.loads(r.content)
     def get_reward(self):
         r = requests.get(self.server + "/reward")
@@ -56,11 +57,13 @@ class Environment:
     ##
     # Common API
     ##
-    def reset(self):
-        r = requests.get(self.server + "/reset")
+    def reset(self, preprocess = False):
+        parameter = "?preprocess" if preprocess else ""
+        r = requests.get(self.server + "/reset" + parameter)
         return pickle.loads(r.content)
-    def step(self, action):
-        r = requests.post(self.server + "/action", data={'id': action})
+    def step(self, action, preprocess = False):
+        parameter = "?preprocess" if preprocess else ""
+        r = requests.post(self.server + "/action" + parameter, data={'id': action})
         content = pickle.loads(r.content)
         return content['state'], content['reward'], content['done'], content['info']
     
