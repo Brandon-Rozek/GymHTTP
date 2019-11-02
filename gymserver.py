@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 import pickle
 import json
+import numpy as np
 
 # Make it so that it doesn't log every HTTP request
 import logging
@@ -53,9 +54,7 @@ class PongEnv(Environment):
         frame = frame[34:194, 15:145] # Crops to shape (160, 130)
         # Downsample
         frame = cv2.resize(frame, (80, 80), interpolation=cv2.INTER_AREA)
-        # Normalize
-        frame = frame / 255
-        return frame
+        return frame.astype(np.uint8)
 
 
 

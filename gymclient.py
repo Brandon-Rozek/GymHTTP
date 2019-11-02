@@ -67,4 +67,4 @@ class Environment:
         content = pickle.loads(r.content)
         return content['state'], content['reward'], content['done'], content['info']
     
-# env = Environment("127.0.0.1", 5000)
+env = Environment("127.0.0.1", 5000)
